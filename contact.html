@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ｜サーチド新書</title>
+<meta name="description" content="サーチド新書へのお問い合わせ。記事・購読・取材・その他のご連絡を承る。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">サーチド新書<span class="en">SEARCHED&nbsp;PRESS</span></a>
+    <nav class="nav">
+      <a href="/articles.html">記事一覧</a>
+      <a href="/about.html">編集方針</a>
+      <a href="/pricing.html">購読・購入</a>
+      <a href="/contact.html">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="page-head">
+    <div class="read">
+      <h1>お問い合わせ</h1>
+      <p>記事・購読・取材・その他のご連絡を承る。以下のフォーム、またはメールにてご連絡いただきたい。</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:40px;">
+    <div class="read">
+      <!-- 運用メモ：action 先を Formspree / Cloudflare Pages Functions / メールに差し替える -->
+      <form class="form-grid" action="#" method="post" onsubmit="return handleSubmit(event)">
+        <div class="field">
+          <label for="name">お名前 ／ 組織名</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="subject">件名</label>
+          <input type="text" id="subject" name="subject">
+        </div>
+        <div class="field">
+          <label for="message">お問い合わせ内容</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <!-- 簡易スパム対策（ハニーポット） -->
+        <input type="text" name="company_url" style="display:none" tabindex="-1" autocomplete="off">
+        <div>
+          <button class="btn primary" type="submit">送信する</button>
+        </div>
+        <p id="form-msg" class="note" style="display:none;"></p>
+      </form>
+
+      <p class="note" style="margin-top:30px;">
+        メールでのご連絡：<span class="todo">運用メモ：問い合わせ用メールアドレスを記載（例 contact@searched.press）。フォームの送信先サービスも未設定。</span>
+      </p>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script>
+function handleSubmit(e){
+  e.preventDefault();
+  // ハニーポットに入力があれば送信を無視
+  if (e.target.company_url.value) return false;
+  var msg = document.getElementById("form-msg");
+  msg.style.display = "block";
+  msg.textContent = "送信先が未設定である。Formspree 等のフォームサービス、または Cloudflare Pages Functions を接続すると実送信が可能になる。";
+  return false;
+}
+</script>
+<script src="/assets/footer.js"></script>
+</body>
+</html>
