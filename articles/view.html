@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>記事｜サーチド出版</title>
+<meta name="description" content="サーチド出版の記事">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/articles-index.js"></script>
+<script src="/assets/articles-data-1.js"></script>
+<script src="/assets/articles-data-2.js"></script>
+<script src="/assets/articles-data-3.js"></script>
+<script src="/assets/articles-data-4.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></a>
+    <nav class="nav">
+      <a href="/shinsho.html">サーチド新書</a>
+      <a href="/research.html">リサーチ</a>
+      <a href="/articles.html">データベース</a>
+      <a href="/pricing.html">購読・購入</a>
+      <a href="/contact.html">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <article>
+    <div class="article-head">
+      <div class="read">
+        <div class="cat" id="a-cat"></div>
+        <h1 id="a-title">読み込み中…</h1>
+        <p class="lead" id="a-lead"></p>
+        <div class="meta" id="a-meta"></div>
+      </div>
+    </div>
+    <div class="article-body">
+      <div class="read" id="a-body"></div>
+      <div class="read" id="a-foot" style="margin-top:8px;"></div>
+    </div>
+  </article>
+</main>
+
+<div id="site-footer"></div>
+<script>
+(function () {
+  var fmt = function (s) { return (s || '').replace(/-/g, '.'); };
+  var readMin = function (c) { return Math.max(1, Math.round((c || 0) / 800)); };
+  var params = new URLSearchParams(location.search);
+  var slug = params.get('slug');
+  var arts = window.ARTICLES || [];
+  var bodies = window.ARTICLE_BODIES || {};
+  var meta = arts.filter(function (a) { return a.slug === slug; })[0];
+  var body = bodies[slug];
+
+  if (!meta) {
+    document.getElementById('a-title').textContent = '記事が見つかりません';
+    document.getElementById('a-body').innerHTML = '<p><a href="/articles.html">データベースへ戻る</a></p>';
+    return;
+  }
+
+  document.title = meta.title + '｜サーチド出版';
+  // canonical → note 原典
+  if (meta.noteUrl) {
+    var link = document.createElement('link');
+    link.rel = 'canonical'; link.href = meta.noteUrl;
+    document.head.appendChild(link);
+  }
+  document.getElementById('a-cat').textContent = meta.category + (meta.series ? ' ｜ ' + meta.series : '');
+  document.getElementById('a-title').textContent = meta.title;
+  document.getElementById('a-lead').textContent = meta.lead || '';
+  document.getElementById('a-meta').innerHTML =
+    '<span>サーチド新書編集部</span><span>' + fmt(meta.published_at) + '</span><span>約' +
+    readMin(meta.char_count) + '分（' + (meta.char_count || 0).toLocaleString() + '字）</span>';
+
+  document.getElementById('a-body').innerHTML = body || '<p>本文を読み込めませんでした。</p>';
+
+  var foot = '<hr style="border:none;border-top:1px solid var(--line);margin:40px 0 24px;">'
+    + '<p class="note">本稿は note「サーチド新書」掲載記事の転載である。';
+  if (meta.noteUrl) { foot += ' 原典：<a href="' + meta.noteUrl + '" target="_blank" rel="noopener">noteで読む ↗</a>'; }
+  foot += '</p><div class="hero-actions" style="margin-top:18px;"><a class="btn" href="/articles.html">← データベースへ戻る</a></div>';
+  document.getElementById('a-foot').innerHTML = foot;
+})();
+</script>
+<script src="/assets/footer.js"></script>
+</body>
+</html>
