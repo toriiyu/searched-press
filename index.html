@@ -3,6 +3,152 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サーチド出版｜読みごたえのある長文を、編集された知として</title>
+<meta name="description" content="サーチド出版は、深い分析と教養を求める読者のための長文コンテンツの発行体である。記事の紹介・検索可能なデータベース・書籍の刊行を一つの場所で提供する。">
+<meta property="og:title" content="サーチド出版">
+<meta property="og:description" content="読みごたえのある長文を、編集された知として。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://searched.press/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/articles-index.js"></script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="/">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></a>
+    <nav class="nav">
+      <a href="/shinsho.html">サーチド新書</a>
+      <a href="/research.html">リサーチ</a>
+      <a href="/articles.html">データベース</a>
+      <a href="/pricing.html">購読・購入</a>
+      <a href="/contact.html">お問い合わせ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- ヒーロー -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="lede">読みごたえのある長文を、<br>編集された知として。</p>
+      <p class="sub">サーチド出版は、深い分析と教養を求める読者のための発行体である。一過性の情報ではなく、時間をかけて読むに値する論考を編む。</p>
+      <div class="hero-actions">
+        <a class="btn primary" href="/articles.html">記事を読む</a>
+        <a class="btn" href="/shinsho.html">サーチド新書とは</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 注目記事 -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>注目記事</h2>
+        <a class="more" href="/articles.html">すべての記事へ →</a>
+      </div>
+      <div class="cards" id="featured"></div>
+    </div>
+  </section>
+
+  <!-- 新着記事 -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>新着記事</h2>
+        <a class="more" href="/articles.html">データベースで探す →</a>
+      </div>
+      <div class="cards" id="latest"></div>
+    </div>
+  </section>
+
+  <!-- 刊行書籍 -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>サーチド出版の刊行物</h2>
+        <span class="more">サーチド出版より刊行</span>
+      </div>
+      <div class="book">
+        <div class="cover">
+          <span class="k">サーチド新書</span>
+          <span class="t">人類学超入門</span>
+          <span class="pub">SEARCHED&nbsp;PRESS</span>
+        </div>
+        <div class="info">
+          <div class="cat">書籍 ｜ Kindle</div>
+          <h3>『人類学超入門 ―徹底解説・完全網羅―』</h3>
+          <p>サーチド出版より、Kindle にて電子書籍を刊行。人類学の全体像を、新書の体裁で徹底解説・完全網羅した一冊である。サーチド新書が編む長文の知を、まとまった書物として読める。</p>
+          <div class="meta">サーチド出版（サーチド新書）／ Kindle 電子書籍</div>
+          <a class="btn primary" href="https://www.amazon.co.jp/dp/B0H3QDHRFP" target="_blank" rel="noopener">Amazon Kindle で読む</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 発信チャンネル -->
+  <section class="section">
+    <div class="wrap" style="text-align:center;">
+      <div class="section-head" style="justify-content:center;">
+        <h2>発信チャンネル</h2>
+      </div>
+      <p class="sub" style="margin:0 auto 24px; max-width:36em;">本サイトのほか、note と X でも記事の公開・告知を行っている。最新の動きはこちらから。</p>
+      <div class="channels" style="justify-content:center;">
+        <a class="channel" href="https://note.com/searched" target="_blank" rel="noopener">note ↗</a>
+        <a class="channel" href="https://x.com/searched_press" target="_blank" rel="noopener">X（@searched_press）↗</a>
+        <a class="channel" href="https://www.amazon.co.jp/dp/B0H3QDHRFP" target="_blank" rel="noopener">Kindle『人類学超入門』↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- データベース導線 -->
+  <section class="section">
+    <div class="wrap" style="text-align:center;">
+      <div class="section-head" style="justify-content:center;">
+        <h2>記事データベース</h2>
+      </div>
+      <p class="sub" style="margin:0 auto 28px; max-width:38em;">カテゴリ・タグ・シリーズ・公開年・文字数で、過去のすべての論考を検索・絞り込みできる。読みたい一篇に最短で辿り着くための索引である。</p>
+      <a class="btn primary" href="/articles.html">データベースを開く</a>
+    </div>
+  </section>
+</main>
+
+<div id="site-footer"></div>
+<script>
+(function () {
+  var arts = (window.ARTICLES || []).slice();
+  var readMin = function (c) { return Math.max(1, Math.round((c || 0) / 800)); };
+  var fmt = function (s) { return (s || '').replace(/-/g, '.'); };
+  var esc = function (s) { return (s || '').replace(/[&<>]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); };
+  var card = function (a) {
+    return '<article class="card"><a href="' + a.noteUrl + '" target="_blank" rel="noopener">'
+      + '<div class="thumb">' + esc(a.category) + (a.series ? '｜' + esc(a.series) : '') + '</div>'
+      + '<div class="body">'
+      + '<div class="cat">' + esc(a.category) + '</div>'
+      + '<h3>' + esc(a.title) + '</h3>'
+      + '<p class="lead">' + esc((a.lead || '').slice(0, 70)) + '</p>'
+      + '<div class="meta"><span>' + fmt(a.published_at) + '</span><span>約' + readMin(a.char_count) + '分</span></div>'
+      + '</div></a></article>';
+  };
+  var byNew = arts.slice().sort(function (a, b) { return (b.published_at||'').localeCompare(a.published_at||''); });
+  var featSlugs = ['nf5768def619f','n4a819d4ee380','nb766ba22b423'];
+  var featured = featSlugs.map(function (s) { return arts.filter(function (a) { return a.slug === s; })[0]; }).filter(Boolean);
+  if (featured.length < 3) featured = byNew.slice(0, 3);
+  document.getElementById('featured').innerHTML = featured.map(card).join('');
+  document.getElementById('latest').innerHTML = byNew.slice(0, 6).map(card).join('');
+})();
+</script>
+<script src="/assets/footer.js"></script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>サーチド新書｜読みごたえのある長文を、編集された知として</title>
 <meta name="description" content="サーチド新書は、深い分析と教養を求める読者のための長文コンテンツの発行体である。記事の紹介・検索可能なデータベース・記事単位の販売を一つの場所で提供する。">
 <meta property="og:title" content="サーチド新書">
