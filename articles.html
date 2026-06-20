@@ -3,21 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>記事一覧・データベース｜サーチド新書</title>
-<meta name="description" content="サーチド新書の全記事を、キーワード検索とカテゴリ・タグ・シリーズ・公開年での絞り込み、並び替えで探せるデータベース。">
+<title>記事一覧・データベース｜サーチド出版</title>
+<meta name="description" content="サーチド出版の全記事を、キーワード検索とカテゴリ・タグ・シリーズ・公開年での絞り込み、並び替えで探せるデータベース。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+<script src="/assets/articles-index.js"></script>
 </head>
 <body>
 
 <header class="site-header">
   <div class="wrap">
-    <a class="brand" href="/">サーチド新書<span class="en">SEARCHED&nbsp;PRESS</span></a>
+    <a class="brand" href="/">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></a>
     <nav class="nav">
-      <a href="/articles.html">記事一覧</a>
-      <a href="/about.html">編集方針</a>
+      <a href="/shinsho.html">サーチド新書</a>
+      <a href="/research.html">リサーチ</a>
+      <a href="/articles.html">データベース</a>
       <a href="/pricing.html">購読・購入</a>
       <a href="/contact.html">お問い合わせ</a>
     </nav>
@@ -59,113 +61,72 @@
 <div id="site-footer"></div>
 
 <script>
-/* ===== 記事データ（運用時は CMS / Markdown に置き換え可能） ===== */
-const ARTICLES = [
-  { slug:"sample", title:"「検索される知」とは何か——索引化される世界における読書の条件",
-    lead:"あらゆる情報が検索可能になった時代に、なお人が長文を読む意味はどこにあるのか。索引と熟読のあいだを問う。",
-    category:"思想", series:"検索される知", tags:["読書","知識論","メディア"],
-    published_at:"2026-06-10", char_count:14200, access_type:"単品有料", price:480 },
-  { slug:"sample", title:"注意の経済学——無料コンテンツが支払わせている本当の代価",
-    lead:"無料で読めるものほど高くつく。情報の供給過剰がもたらす「注意の希少化」を経済の言葉で解く。",
-    category:"経済", series:"検索される知", tags:["経済","メディア","行動"],
-    published_at:"2026-06-04", char_count:17800, access_type:"単品有料", price:480 },
-  { slug:"sample", title:"新書という様式——戦後日本の教養はいかに編集されたか",
-    lead:"手のひらに収まる一冊が、戦後の知をどう民主化したのか。新書という器そのものの歴史を辿る。",
-    category:"歴史", series:"編集の系譜", tags:["出版","教養","戦後"],
-    published_at:"2026-05-28", char_count:16100, access_type:"単品有料", price:480 },
-  { slug:"sample", title:"確率を読み違える脳——統計的直観の限界をめぐって",
-    lead:"人はなぜ確率を誤るのか。認知科学の知見から、数字に欺かれない読みの作法を考える。",
-    category:"科学", series:null, tags:["認知科学","統計","思考"],
-    published_at:"2026-06-12", char_count:12900, access_type:"無料", price:0 },
-  { slug:"sample", title:"生成と編集——AIが書く時代に編集者は何を担うか",
-    lead:"文章を生成する機械が普及するほど、選び・削り・束ねる「編集」の価値が前景化する。",
-    category:"テクノロジー", series:"編集の系譜", tags:["AI","編集","労働"],
-    published_at:"2026-06-08", char_count:15300, access_type:"単品有料", price:480 },
-  { slug:"sample", title:"匿名であること——署名なき言論の倫理と可能性",
-    lead:"名を伏せて語ることは無責任なのか。匿名性が言論にもたらす制約と自由の双方を検討する。",
-    category:"社会", series:null, tags:["言論","倫理","匿名"],
-    published_at:"2026-06-01", char_count:13600, access_type:"会員限定", price:0 },
-  { slug:"sample", title:"読書時間の貧困——可処分時間をめぐる現代の不平等",
-    lead:"金よりも時間が稀少になった社会で、長文を読む余裕は誰に許されているのか。",
-    category:"社会", series:null, tags:["時間","格差","読書"],
-    published_at:"2026-05-20", char_count:11800, access_type:"単品有料", price:380 },
-  { slug:"sample", title:"古典を更新する——なぜ人は同じ本を読み返すのか",
-    lead:"再読は退行ではない。読み返しによって立ち上がる、もう一つの読書論。",
-    category:"思想", series:"検索される知", tags:["古典","読書","解釈"],
-    published_at:"2026-05-12", char_count:14900, access_type:"単品有料", price:480 }
-];
+var ARTICLES = (window.ARTICLES || []).slice();
 
-/* ===== ユーティリティ ===== */
-const fmtDate = s => s.replace(/-/g, ".");
-const readMin = c => Math.max(1, Math.round(c / 800)); // 約800字/分
-const yearOf = s => s.slice(0, 4);
+var fmtDate = function (s) { return (s || '').replace(/-/g, "."); };
+var readMin = function (c) { return Math.max(1, Math.round((c || 0) / 800)); };
+var yearOf = function (s) { return (s || '').slice(0, 4); };
+var esc = function (s) { return (s || '').replace(/[&<>]/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); };
 
-/* ===== フィルタ選択肢を生成 ===== */
-function fill(sel, values, label) {
-  const el = document.getElementById(sel);
-  [...new Set(values.filter(Boolean))].sort().forEach(v => {
-    const o = document.createElement("option"); o.value = v; o.textContent = v; el.appendChild(o);
+function fill(sel, values) {
+  var el = document.getElementById(sel);
+  var uniq = [];
+  values.forEach(function (v) { if (v && uniq.indexOf(v) < 0) uniq.push(v); });
+  uniq.sort().forEach(function (v) {
+    var o = document.createElement("option"); o.value = v; o.textContent = v; el.appendChild(o);
   });
 }
-fill("f-category", ARTICLES.map(a => a.category));
-fill("f-series", ARTICLES.map(a => a.series));
-fill("f-year", ARTICLES.map(a => yearOf(a.published_at)));
-
-/* ===== 描画 ===== */
-function accessClass(t){ return t === "無料" ? "free" : "paid"; }
+fill("f-category", ARTICLES.map(function (a) { return a.category; }));
+fill("f-series", ARTICLES.map(function (a) { return a.series; }));
+fill("f-year", ARTICLES.map(function (a) { return yearOf(a.published_at); }));
 
 function render() {
-  const q = document.getElementById("q").value.trim().toLowerCase();
-  const fc = document.getElementById("f-category").value;
-  const fs = document.getElementById("f-series").value;
-  const fy = document.getElementById("f-year").value;
-  const sort = document.getElementById("f-sort").value;
+  var q = document.getElementById("q").value.trim().toLowerCase();
+  var fc = document.getElementById("f-category").value;
+  var fs = document.getElementById("f-series").value;
+  var fy = document.getElementById("f-year").value;
+  var sort = document.getElementById("f-sort").value;
 
-  let rows = ARTICLES.filter(a => {
+  var rows = ARTICLES.filter(function (a) {
     if (fc && a.category !== fc) return false;
     if (fs && a.series !== fs) return false;
     if (fy && yearOf(a.published_at) !== fy) return false;
     if (q) {
-      const hay = (a.title + " " + a.lead + " " + (a.tags||[]).join(" ") + " " + a.category).toLowerCase();
-      if (!hay.includes(q)) return false;
+      var hay = (a.title + " " + (a.lead||'') + " " + (a.tags || []).join(" ") + " " + a.category).toLowerCase();
+      if (hay.indexOf(q) < 0) return false;
     }
     return true;
   });
 
-  rows.sort((a, b) => {
-    if (sort === "new") return b.published_at.localeCompare(a.published_at);
-    if (sort === "old") return a.published_at.localeCompare(b.published_at);
-    if (sort === "long") return b.char_count - a.char_count;
-    if (sort === "short") return a.char_count - b.char_count;
+  rows.sort(function (a, b) {
+    if (sort === "new") return (b.published_at||'').localeCompare(a.published_at||'');
+    if (sort === "old") return (a.published_at||'').localeCompare(b.published_at||'');
+    if (sort === "long") return (b.char_count||0) - (a.char_count||0);
+    if (sort === "short") return (a.char_count||0) - (b.char_count||0);
     return 0;
   });
 
-  const list = document.getElementById("list");
-  list.innerHTML = rows.map(a => `
-    <article class="article-row">
-      <div>
-        <div class="cat">${a.category}${a.series ? ' ｜ ' + a.series : ''}</div>
-        <h3><a href="/articles/${a.slug}.html">${a.title}</a></h3>
-        <p class="lead">${a.lead}</p>
-        <div class="meta">
-          <span>${fmtDate(a.published_at)}</span>
-          <span>約${readMin(a.char_count)}分（${a.char_count.toLocaleString()}字）</span>
-        </div>
-        <div class="tags">${(a.tags||[]).map(t => `<span class="tag">#${t}</span>`).join("")}</div>
-      </div>
-      <div class="row-aside">
-        <span class="access-pill ${accessClass(a.access_type)}">${a.access_type}</span>
-        ${a.price ? `<div style="margin-top:8px;">¥${a.price.toLocaleString()}</div>` : ''}
-      </div>
-    </article>
-  `).join("");
+  var list = document.getElementById("list");
+  list.innerHTML = rows.map(function (a) {
+    return '<article class="article-row">'
+      + '<div>'
+      + '<div class="cat">' + esc(a.category) + (a.series ? ' ｜ ' + esc(a.series) : '') + '</div>'
+      + '<h3><a href="' + a.noteUrl + '" target="_blank" rel="noopener">' + esc(a.title) + '</a></h3>'
+      + '<p class="lead">' + esc(a.lead || '') + '</p>'
+      + '<div class="meta"><span>' + fmtDate(a.published_at) + '</span><span>約' + readMin(a.char_count) + '分（' + (a.char_count||0).toLocaleString() + '字）</span></div>'
+      + '<div class="tags">' + (a.tags || []).map(function (t) { return '<span class="tag">#' + esc(t) + '</span>'; }).join("") + '</div>'
+      + '</div>'
+      + '<div class="row-aside"><span class="access-pill free">' + esc(a.access_type || '無料') + '</span></div>'
+      + '</article>';
+  }).join("");
 
-  document.getElementById("count").textContent = `全 ${rows.length} 件`;
+  document.getElementById("count").textContent = "全 " + rows.length + " 件";
   document.getElementById("empty").style.display = rows.length ? "none" : "block";
 }
 
-["q","f-category","f-series","f-year","f-sort"].forEach(id =>
-  document.getElementById(id).addEventListener("input", render));
+["q","f-category","f-series","f-year","f-sort"].forEach(function (id) {
+  document.getElementById(id).addEventListener("input", render);
+});
 render();
 </script>
 <script src="/assets/footer.js"></script>
