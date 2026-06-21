@@ -2,6 +2,18 @@
    サーチド出版 — 動的演出（控えめで上質なモーション）
    =========================================================== */
 
+/* ---- ブランドカラー：SEARCHED ブルーに寄せる ---- */
+:root {
+  --accent: #2353c9;        /* SEARCHED ロイヤルブルー */
+  --accent-deep: #16327e;   /* 濃紺 */
+  --accent-faint: #e9eefc;  /* 淡いブルー */
+}
+.hero {
+  background:
+    radial-gradient(120% 80% at 80% 0%, var(--accent-faint) 0%, transparent 58%),
+    var(--paper);
+}
+
 /* ---- スクロール・リビール ---- */
 .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s cubic-bezier(.22,.61,.36,1), transform .7s cubic-bezier(.22,.61,.36,1); will-change: opacity, transform; }
 .reveal.in { opacity: 1; transform: none; }
@@ -62,6 +74,14 @@
 .channel:hover { transform: translateY(-2px); }
 .book .cover { transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease; }
 .book:hover .cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 20px 44px rgba(31,51,64,.3); }
+
+/* ---- レスポンシブ・ヘッダー（狭幅で重ならないよう段組み） ---- */
+@media (max-width: 920px) {
+  .site-header .wrap { flex-direction: column; align-items: flex-start; height: auto; gap: 10px; padding-top: 12px; padding-bottom: 12px; }
+  .site-header .nav { display: flex !important; gap: 12px 18px; font-size: 0.82rem; flex-wrap: wrap; }
+  .site-header .brand { font-size: 1.08rem; }
+  .site-header .nav a::after { bottom: -2px; }
+}
 
 /* ---- アクセシビリティ：動きを減らす設定を尊重 ---- */
 @media (prefers-reduced-motion: reduce) {
