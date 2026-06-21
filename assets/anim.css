@@ -97,6 +97,85 @@ body .site-header .wrap { height: auto; min-height: 68px; padding-top: 10px; pad
 /* ---- フッター：ネイビー地＋上部に明るい青ライン ---- */
 .site-footer { border-top: 3px solid #3a5fd0; background: var(--navy-grad); }
 
+/* ===========================================================
+   クリエイティブ・レイヤー：没入型ネイビー＋ゴールドの差し色
+   =========================================================== */
+:root { --gold: #c6a15b; --gold-soft: #d8b878; }
+
+/* ---- ヒーロー：全面ネイビーの没入ブロック ---- */
+body .hero {
+  background:
+    radial-gradient(120% 130% at 88% -20%, rgba(58,95,208,0.40) 0%, rgba(58,95,208,0) 55%),
+    var(--navy-grad);
+  color: #ffffff;
+  border-bottom: none;
+  padding: 124px 0 108px;
+  position: relative;
+  overflow: hidden;
+}
+/* 眼鏡モチーフの大きな透かし */
+body .hero::before {
+  content: "";
+  position: absolute; right: -48px; top: 50%; transform: translateY(-50%);
+  width: 580px; max-width: 64%; aspect-ratio: 64 / 26;
+  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2026'%20fill='none'%20stroke='%23ffffff'%20stroke-width='1.6'%20stroke-linejoin='round'%3E%3Crect%20x='2'%20y='4'%20width='24'%20height='18'%20rx='6'/%3E%3Crect%20x='38'%20y='4'%20width='24'%20height='18'%20rx='6'/%3E%3Cpath%20d='M26%209%20C30%205.2%2034%205.2%2038%209'%20stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / contain;
+  opacity: 0.08; pointer-events: none;
+}
+body .hero .wrap { position: relative; z-index: 1; }
+/* ゴールドのキッカー罫 */
+body .hero .lede::before {
+  content: ""; display: block; width: 58px; height: 3px;
+  background: var(--gold); margin: 0 0 28px;
+}
+body .hero .lede { color: #ffffff; font-size: clamp(1.8rem, 4.2vw, 2.7rem); letter-spacing: 0.05em; }
+body .hero .sub { color: rgba(255,255,255,0.74); }
+/* ヒーロー内ボタン：ゴールド主役＋白アウトライン */
+body .hero .btn { border-color: rgba(255,255,255,0.45); color: #ffffff; background: transparent; }
+body .hero .btn:hover { background: #ffffff; color: var(--accent-deep); }
+body .hero .btn.primary { background: var(--gold); border-color: var(--gold); color: #16140f; }
+body .hero .btn.primary:hover { background: var(--gold-soft); border-color: var(--gold-soft); color: #16140f; box-shadow: 0 10px 26px rgba(198,161,91,0.34); }
+
+/* ---- 下層ページの見出し帯もネイビーに（全ページ統一） ---- */
+body .page-head {
+  background:
+    radial-gradient(120% 150% at 90% -30%, rgba(58,95,208,0.38) 0%, rgba(58,95,208,0) 55%),
+    var(--navy-grad);
+  color: #ffffff; border-bottom: none;
+  padding: 88px 0 66px; position: relative; overflow: hidden;
+}
+body .page-head h1 { color: #ffffff; }
+body .page-head h1::before {
+  content: ""; display: block; width: 56px; height: 3px;
+  background: var(--gold); margin: 0 0 22px;
+}
+body .page-head p { color: rgba(255,255,255,0.74); }
+body .page-head .read, body .page-head .wrap { position: relative; z-index: 1; }
+
+/* ---- 見出しのアクセントバーをゴールドに ---- */
+body .section-head h2::before { background: var(--gold); width: 5px; }
+
+/* ---- カードのサムネをネイビーの“表紙”に ---- */
+body .card .thumb {
+  background:
+    radial-gradient(120% 120% at 85% 0%, rgba(58,95,208,0.45) 0%, rgba(58,95,208,0) 60%),
+    var(--navy-grad);
+  color: rgba(255,255,255,0.92);
+  letter-spacing: 0.36em;
+}
+body .card { border-color: #e3ddd0; border-radius: 4px; }
+body .card:hover { box-shadow: 0 24px 54px rgba(14,28,68,0.20); }
+
+/* ---- 刊行書籍カバー：影を深く ---- */
+body .book .cover { box-shadow: 0 22px 54px rgba(14,28,68,0.36); }
+body .book .cover .t { letter-spacing: 0.06em; }
+
+/* ---- 区切りに極細のゴールド線（セクション境界の演出） ---- */
+.section + .section { position: relative; }
+.section + .section::before {
+  content: ""; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
+  width: 46px; height: 2px; background: var(--gold); opacity: 0.7;
+}
+
 /* ---- レスポンシブ・ヘッダー（狭幅で重ならないよう段組み） ---- */
 @media (max-width: 920px) {
   .site-header .wrap { flex-direction: column; align-items: flex-start; height: auto; gap: 10px; padding-top: 12px; padding-bottom: 12px; }
