@@ -5,9 +5,9 @@
 
 /* ---- ブランドカラー：SEARCHED ロイヤルブルー ---- */
 :root {
-  --accent: #2353c9;        /* SEARCHED ロイヤルブルー */
-  --accent-deep: #16327e;   /* 濃紺 */
-  --accent-faint: #e9eefc;  /* 淡いブルー */
+  --accent: #1f40bd;        /* 群青（SEARCHED ブルー） */
+  --accent-deep: #14277a;   /* 濃群青 */
+  --accent-faint: #e8ecfb;  /* 淡い群青 */
 }
 
 /* ---- ヘッダー：上部に青のアクセントバー ---- */
@@ -26,7 +26,7 @@
 .hero {
   background:
     radial-gradient(130% 90% at 82% -10%, var(--accent-faint) 0%, rgba(233,238,252,0) 60%),
-    linear-gradient(180deg, rgba(35,83,201,0.05) 0%, rgba(35,83,201,0) 34%),
+    linear-gradient(180deg, rgba(31,64,189,0.05) 0%, rgba(31,64,189,0) 34%),
     var(--paper);
   background-size: 200% 200%, 100% 100%, auto;
   animation: auroraShift 20s ease-in-out infinite;
@@ -64,7 +64,7 @@
 /* ---- カードの浮き上がり・サムネのズーム ---- */
 .card { transition: box-shadow .28s ease, transform .28s cubic-bezier(.22,.61,.36,1); }
 .card .thumb { transition: transform .5s cubic-bezier(.22,.61,.36,1); overflow: hidden; }
-.card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(35,83,201,.16); }
+.card:hover { transform: translateY(-6px); box-shadow: 0 18px 44px rgba(31,64,189,.16); }
 .card:hover .thumb { transform: scale(1.05); }
 
 /* ---- 記事リスト行のホバー ---- */
@@ -81,14 +81,14 @@
 
 /* ---- ボタンの浮き＆光沢 ---- */
 .btn { transition: all .22s ease, transform .22s cubic-bezier(.22,.61,.36,1); }
-.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(35,83,201,.20); }
-.btn.primary:hover { box-shadow: 0 10px 24px rgba(35,83,201,.30); }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(31,64,189,.20); }
+.btn.primary:hover { box-shadow: 0 10px 24px rgba(31,64,189,.30); }
 
 /* ---- 発信チャンネル・書籍カバーのホバー ---- */
 .channel { transition: transform .2s ease, border-color .18s ease, color .18s ease; }
 .channel:hover { transform: translateY(-2px); }
 .book .cover { transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease; }
-.book:hover .cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 20px 44px rgba(35,83,201,.34); }
+.book:hover .cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 20px 44px rgba(31,64,189,.34); }
 
 /* ---- フッター：上部に青ライン ---- */
 .site-footer { border-top: 2px solid var(--accent); }
