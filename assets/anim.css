@@ -5,22 +5,24 @@
 
 /* ---- ブランドカラー：SEARCHED ロイヤルブルー ---- */
 :root {
-  --accent: #1f40bd;        /* 群青（SEARCHED ブルー） */
-  --accent-deep: #14277a;   /* 濃群青 */
-  --accent-faint: #e8ecfb;  /* 淡い群青 */
+  --accent: #1a2f6b;        /* ネイビー（SEARCHED ブルー） */
+  --accent-deep: #0e1c44;   /* 濃紺 */
+  --accent-mid: #21408f;    /* 中間の青 */
+  --accent-faint: #e7eaf3;  /* 淡い紺 */
+  --navy-grad: linear-gradient(180deg, #16285c 0%, #0e1c44 100%);
 }
 
-/* ---- ヘッダー：上部に青のアクセントバー ---- */
-.site-header { border-top: 3px solid var(--accent); }
+/* ---- ヘッダー：ネイビー地＋上部に明るい青のアクセントバー ---- */
+.site-header { border-top: 3px solid #3a5fd0; background: var(--navy-grad); }
 
-/* ---- ブランドロゴ（眼鏡マーク＋ワードマーク） ---- */
+/* ---- ブランドロゴ（眼鏡マーク＋ワードマーク：ネイビー地に白） ---- */
 .brand { display: inline-flex; align-items: center; gap: 11px; }
-.brand .gl { display: inline-flex; flex: none; color: var(--accent); line-height: 0; }
+.brand .gl { display: inline-flex; flex: none; color: #ffffff; line-height: 0; }
 .brand .gl svg { width: 44px; height: auto; display: block; }
 .brand .txt { display: inline-flex; flex-direction: column; line-height: 1.18; }
-.brand .en { color: var(--accent); }
+.brand .en { color: rgba(255, 255, 255, 0.66); }
 .site-footer .brand .gl svg { width: 38px; }
-.brand:hover .gl { color: var(--accent-deep); }
+.brand:hover .gl { color: rgba(255, 255, 255, 0.85); }
 
 /* ---- ヒーロー：青を主役にした背景 ---- */
 .hero {
@@ -75,7 +77,7 @@
 
 /* ---- ナビ下線スライド ---- */
 .site-header .nav a { position: relative; }
-.site-header .nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 1.5px; width: 0; background: var(--accent); transition: width .28s cubic-bezier(.22,.61,.36,1); }
+.site-header .nav a::after { content: ""; position: absolute; left: 0; bottom: -4px; height: 1.5px; width: 0; background: #ffffff; transition: width .28s cubic-bezier(.22,.61,.36,1); }
 .site-header .nav a:hover { text-decoration: none; }
 .site-header .nav a:hover::after { width: 100%; }
 
@@ -90,8 +92,8 @@
 .book .cover { transition: transform .5s cubic-bezier(.22,.61,.36,1), box-shadow .4s ease; }
 .book:hover .cover { transform: translateY(-4px) rotate(-1deg); box-shadow: 0 20px 44px rgba(31,64,189,.34); }
 
-/* ---- フッター：上部に青ライン ---- */
-.site-footer { border-top: 2px solid var(--accent); }
+/* ---- フッター：ネイビー地＋上部に明るい青ライン ---- */
+.site-footer { border-top: 3px solid #3a5fd0; background: var(--navy-grad); }
 
 /* ---- レスポンシブ・ヘッダー（狭幅で重ならないよう段組み） ---- */
 @media (max-width: 920px) {
