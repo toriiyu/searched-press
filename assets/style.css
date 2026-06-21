@@ -11,9 +11,11 @@
   --paper-pure: #ffffff;
   --line: #e6e1d8;         /* 罫線 */
   --line-soft: #efece4;
-  --accent: #1f40bd;       /* 群青（SEARCHED ブルー） */
-  --accent-deep: #14277a;  /* 濃群青 */
-  --accent-faint: #e8ecfb; /* 淡い群青 */
+  --accent: #1a2f6b;       /* ネイビー（SEARCHED ブルー） */
+  --accent-deep: #0e1c44;  /* 濃紺 */
+  --accent-mid: #21408f;   /* 中間の青（リンク・強調用） */
+  --accent-faint: #e7eaf3; /* 淡い紺 */
+  --navy-grad: linear-gradient(180deg, #16285c 0%, #0e1c44 100%);
   --maxw: 1080px;
   --readw: 720px;
   --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho",
@@ -40,7 +42,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--accent); text-decoration: none; transition: color .18s ease; }
+a { color: var(--accent-mid); text-decoration: none; transition: color .18s ease; }
 a:hover { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
 
 img { max-width: 100%; display: block; }
@@ -50,9 +52,9 @@ img { max-width: 100%; display: block; }
 
 /* ---------- ヘッダー ---------- */
 .site-header {
-  border-bottom: 1px solid var(--line);
-  background: rgba(251, 250, 247, 0.92);
-  backdrop-filter: saturate(180%) blur(8px);
+  border-top: 3px solid #3a5fd0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  background: var(--navy-grad);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -68,15 +70,15 @@ img { max-width: 100%; display: block; }
   font-weight: 600;
   font-size: 1.18rem;
   letter-spacing: 0.14em;
-  color: var(--ink);
+  color: #ffffff;
 }
-.brand:hover { text-decoration: none; color: var(--ink); }
+.brand:hover { text-decoration: none; color: #ffffff; }
 .brand .en {
   display: block;
   font-family: var(--sans);
   font-size: 0.62rem;
   letter-spacing: 0.34em;
-  color: var(--ink-faint);
+  color: rgba(255, 255, 255, 0.66);
   font-weight: 500;
   margin-top: 2px;
 }
@@ -87,8 +89,8 @@ img { max-width: 100%; display: block; }
   font-size: 0.84rem;
   letter-spacing: 0.06em;
 }
-.nav a { color: var(--ink-soft); }
-.nav a:hover { color: var(--accent); text-decoration: none; }
+.nav a { color: rgba(255, 255, 255, 0.82); }
+.nav a:hover { color: #ffffff; text-decoration: none; }
 .nav-toggle { display: none; }
 
 /* ---------- ヒーロー ---------- */
@@ -404,21 +406,22 @@ img { max-width: 100%; display: block; }
 
 /* ---------- フッター ---------- */
 .site-footer {
-  border-top: 1px solid var(--line);
-  background: var(--paper-pure);
+  border-top: 3px solid #3a5fd0;
+  background: var(--navy-grad);
+  color: rgba(255, 255, 255, 0.82);
   padding: 56px 0 40px;
-  margin-top: 20px;
+  margin-top: 0;
 }
 .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 36px; }
-.footer-col .ext::after { content: " ↗"; font-size: 0.75em; color: var(--ink-faint); }
-.site-footer .brand { font-size: 1.05rem; }
-.site-footer .desc { color: var(--ink-soft); font-size: 0.9rem; margin: 16px 0 0; max-width: 26em; }
-.footer-col h4 { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.1em; color: var(--ink-faint); margin: 0 0 14px; font-weight: 600; }
-.footer-col a { display: block; color: var(--ink-soft); font-size: 0.9rem; padding: 5px 0; }
-.footer-col a:hover { color: var(--accent); text-decoration: none; }
+.footer-col .ext::after { content: " ↗"; font-size: 0.75em; color: rgba(255, 255, 255, 0.5); }
+.site-footer .brand { font-size: 1.05rem; color: #ffffff; }
+.site-footer .desc { color: rgba(255, 255, 255, 0.62); font-size: 0.9rem; margin: 16px 0 0; max-width: 26em; }
+.footer-col h4 { font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.5); margin: 0 0 14px; font-weight: 600; }
+.footer-col a { display: block; color: rgba(255, 255, 255, 0.8); font-size: 0.9rem; padding: 5px 0; }
+.footer-col a:hover { color: #ffffff; text-decoration: none; }
 .copyright {
-  margin-top: 44px; padding-top: 22px; border-top: 1px solid var(--line-soft);
-  font-family: var(--sans); font-size: 0.76rem; color: var(--ink-faint);
+  margin-top: 44px; padding-top: 22px; border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: var(--sans); font-size: 0.76rem; color: rgba(255, 255, 255, 0.55);
   display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
 }
 
