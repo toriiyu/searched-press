@@ -35,7 +35,7 @@
     + '<footer class="site-footer"><div class="wrap"><div class="footer-grid" style="grid-template-columns:1.6fr 1fr 1fr;">'
     + '  <div class="brand-col">'
     + '    ' + brand
-    + '    <p class="desc">深い分析と教養を求める読者のための発行体。読むに値する論考を編集し、検索可能な知として蓄える。</p>'
+    + '    <p class="desc">書一冊分の文量で、あらゆるテーマを超徹底解説する好奇心駆動のニューメディア。文化人類学から思想・政治・AI・金融・暮らしまで、超入門／超全史／超徹底解説で編む。</p>'
     + '  </div>'
     + '  <div class="footer-col">'
     + '    <h4>コンテンツ</h4>'
