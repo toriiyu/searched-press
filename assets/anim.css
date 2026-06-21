@@ -14,6 +14,8 @@
 
 /* ---- ヘッダー：ネイビー地＋上部に明るい青のアクセントバー ---- */
 .site-header { border-top: 3px solid #3a5fd0; background: var(--navy-grad); }
+/* 高い詳細度で固定高さを上書き（重複読み込み対策）。ナビが地色からはみ出すのを防ぐ */
+body .site-header .wrap { height: auto; min-height: 68px; padding-top: 10px; padding-bottom: 10px; }
 
 /* ---- ブランドロゴ（眼鏡マーク＋ワードマーク：ネイビー地に白） ---- */
 .brand { display: inline-flex; align-items: center; gap: 11px; }
