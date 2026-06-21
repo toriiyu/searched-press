@@ -13,9 +13,13 @@
     document.head.appendChild(an);
   }
 
+  // --- 眼鏡ブランドマーク（SEARCHED ロゴ） ---
+  var mark = '<span class="gl" aria-hidden="true"><svg viewBox="0 0 64 26" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><rect x="2" y="4" width="24" height="18" rx="6"/><rect x="38" y="4" width="24" height="18" rx="6"/><path d="M26 9 C30 5.2 34 5.2 38 9" stroke-linecap="round"/></svg></span>';
+  var brand = '<a class="brand" href="/">' + mark + '<span class="txt">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></span></a>';
+
   // --- ヘッダー（ロゴ＝サーチド出版／ナビ） ---
   var headerHtml = ''
-    + '<a class="brand" href="/">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></a>'
+    + brand
     + '<nav class="nav">'
     + '  <a href="/shinsho.html">サーチド新書</a>'
     + '  <a href="/research.html">リサーチ</a>'
@@ -31,7 +35,7 @@
   var html = ''
     + '<footer class="site-footer"><div class="wrap"><div class="footer-grid" style="grid-template-columns:1.6fr 1fr 1fr;">'
     + '  <div class="brand-col">'
-    + '    <a class="brand" href="/">サーチド出版<span class="en">SEARCHED&nbsp;PRESS</span></a>'
+    + '    ' + brand
     + '    <p class="desc">深い分析と教養を求める読者のための発行体。読むに値する論考を編集し、検索可能な知として蓄える。</p>'
     + '  </div>'
     + '  <div class="footer-col">'
