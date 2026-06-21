@@ -11,9 +11,9 @@
   --paper-pure: #ffffff;
   --line: #e6e1d8;         /* 罫線 */
   --line-soft: #efece4;
-  --accent: #2f4858;       /* 藍鼠（低彩度アクセント一色） */
-  --accent-deep: #1f3340;
-  --accent-faint: #eef1f2;
+  --accent: #1f40bd;       /* 群青（SEARCHED ブルー） */
+  --accent-deep: #14277a;  /* 濃群青 */
+  --accent-faint: #e8ecfb; /* 淡い群青 */
   --maxw: 1080px;
   --readw: 720px;
   --serif: "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho",
