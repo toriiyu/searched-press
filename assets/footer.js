@@ -24,7 +24,6 @@
     + '  <a href="/shinsho.html">サーチド新書</a>'
     + '  <a href="/research.html">リサーチ</a>'
     + '  <a href="/articles.html">データベース</a>'
-    + '  <a href="/pricing.html">購読・購入&nbsp;🔒</a>'
     + '  <a href="/contact.html">お問い合わせ</a>'
     + '</nav>';
   var hwrap = document.querySelector('.site-header .wrap');
@@ -43,7 +42,6 @@
     + '    <a href="/shinsho.html">サーチド新書</a>'
     + '    <a href="/research.html">リサーチ</a>'
     + '    <a href="/articles.html">データベース</a>'
-    + '    <a href="/pricing.html">購読・購入</a>'
     + '    <a href="/contact.html">お問い合わせ</a>'
     + '  </div>'
     + '  <div class="footer-col">'
