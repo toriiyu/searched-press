@@ -65,13 +65,41 @@
 
 <div id="site-footer"></div>
 <script>
-function handleSubmit(e){
+async function handleSubmit(e){
   e.preventDefault();
+  var f = e.target;
   // ハニーポットに入力があれば送信を無視
-  if (e.target.company_url.value) return false;
+  if (f.company_url.value) return false;
   var msg = document.getElementById("form-msg");
+  var btn = f.querySelector('button[type=submit]');
   msg.style.display = "block";
-  msg.textContent = "送信先が未設定である。Formspree 等のフォームサービス、または Cloudflare Pages Functions を接続すると実送信が可能になる。";
+  msg.style.color = "";
+  msg.textContent = "送信しています…";
+  btn.disabled = true;
+  try {
+    var r = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        name: f.name.value, email: f.email.value,
+        subject: f.subject.value, message: f.message.value,
+        company_url: f.company_url.value
+      })
+    });
+    var j = await r.json();
+    if (j.ok) {
+      f.reset();
+      msg.textContent = "送信を受け付けた。お問い合わせ、ありがとうございます。";
+    } else {
+      msg.style.color = "#b3463c";
+      msg.textContent = "送信できなかった。お手数だが、入力内容を確認のうえ再度お試しいただきたい。";
+    }
+  } catch (err) {
+    msg.style.color = "#b3463c";
+    msg.textContent = "通信に失敗した。時間をおいて再度お試しいただきたい。";
+  } finally {
+    btn.disabled = false;
+  }
   return false;
 }
 </script>
