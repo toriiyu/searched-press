@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>管理 — サーチド出版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+  body { background: #0e1c44; color: #fff; }
+  .admin-wrap { max-width: 1000px; margin: 0 auto; padding: 32px 24px 80px; }
+  .admin-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.16); padding-bottom: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .admin-head h1 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin: 0; letter-spacing: .08em; }
+  .admin-head .meta { font-family: var(--sans); font-size: .82rem; color: rgba(255,255,255,.6); }
+  .gate { min-height: 70vh; display: flex; align-items: center; justify-content: center; }
+  .gate .box { width: 90%; max-width: 380px; text-align: center; background: #16285c; border: 1px solid rgba(255,255,255,.14); border-radius: 8px; padding: 40px 32px; }
+  .gate .lock { font-size: 2.2rem; margin-bottom: 14px; }
+  .gate h2 { font-family: var(--serif); font-size: 1.1rem; font-weight: 600; margin: 0 0 18px; }
+  .gate input { width: 100%; box-sizing: border-box; font-family: var(--sans); font-size: 1rem; padding: 12px 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 4px; background: #0e1c44; color: #fff; }
+  .gate .err { color: #ff9e94; font-family: var(--sans); font-size: .82rem; min-height: 1.2em; margin: 8px 0 0; }
+  .btn-gold { display: inline-block; width: 100%; box-sizing: border-box; margin-top: 14px; font-family: var(--sans); font-size: .9rem; letter-spacing: .06em; padding: 12px 20px; border: none; border-radius: 4px; background: #c6a15b; color: #16140f; cursor: pointer; font-weight: 600; }
+  .btn-gold:hover { background: #d8b878; }
+  .cards { display: grid; gap: 14px; }
+  .item { background: #16285c; border: 1px solid rgba(255,255,255,.12); border-left: 3px solid #c6a15b; border-radius: 6px; padding: 18px 20px; }
+  .item .top { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-family: var(--sans); font-size: .8rem; color: rgba(255,255,255,.6); margin-bottom: 8px; }
+  .item .who { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: #fff; }
+  .item .email a { color: #9fc0ff; }
+  .item .subj { font-family: var(--sans); font-size: .9rem; color: rgba(255,255,255,.85); margin: 4px 0 10px; }
+  .item .msg { font-family: var(--serif); font-size: .98rem; line-height: 1.9; white-space: pre-wrap; color: rgba(255,255,255,.92); }
+  .item .actions { margin-top: 12px; text-align: right; }
+  .item .del { font-family: var(--sans); font-size: .76rem; color: rgba(255,255,255,.5); background: none; border: 1px solid rgba(255,255,255,.2); border-radius: 3px; padding: 5px 12px; cursor: pointer; }
+  .item .del:hover { color: #ff9e94; border-color: #ff9e94; }
+  .empty { font-family: var(--sans); color: rgba(255,255,255,.6); padding: 40px 0; text-align: center; }
+  .reload { font-family: var(--sans); font-size: .82rem; color: #c6a15b; background: none; border: 1px solid #c6a15b; border-radius: 4px; padding: 7px 16px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <div class="box">
+    <div class="lock">🔒</div>
+    <h2>管理ページ</h2>
+    <input id="pw" type="password" placeholder="合言葉" autocomplete="off">
+    <p id="err" class="err"></p>
+    <button id="enter" class="btn-gold">入る</button>
+  </div>
+</div>
+
+<div id="app" class="admin-wrap" style="display:none;">
+  <div class="admin-head">
+    <h1>お問い合わせ一覧</h1>
+    <span class="meta"><span id="count">0</span> 件 &nbsp;·&nbsp; <button id="reload" class="reload">再読み込み</button></span>
+  </div>
+  <div id="list" class="cards"></div>
+</div>
+
+<script>
+(function () {
+  var PW = "";
+  var gate = document.getElementById('gate');
+  var app = document.getElementById('app');
+  var pwInput = document.getElementById('pw');
+  var err = document.getElementById('err');
+
+  function esc(s){ return (s||'').replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+  function fmt(s){ if(!s) return ''; var d=new Date(s); return isNaN(d)? s : d.toLocaleString('ja-JP'); }
+
+  async function load() {
+    var r = await fetch('/api/inquiries', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ password: PW })
+    });
+    if (r.status === 401) { throw new Error('合言葉が違います'); }
+    var j = await r.json();
+    if (!j.ok) throw new Error(j.error || 'error');
+    render(j.items || []);
+  }
+
+  function render(items) {
+    document.getElementById('count').textContent = items.length;
+    var list = document.getElementById('list');
+    if (!items.length) { list.innerHTML = '<div class="empty">まだお問い合わせはありません。</div>'; return; }
+    list.innerHTML = items.map(function (it) {
+      return '<div class="item">'
+        + '<div class="top"><span>#' + it.id + '</span><span>' + esc(fmt(it.created_at)) + '</span></div>'
+        + '<div class="who">' + esc(it.name) + '</div>'
+        + '<div class="email"><a href="mailto:' + esc(it.email) + '">' + esc(it.email) + '</a></div>'
+        + (it.subject ? '<div class="subj">件名：' + esc(it.subject) + '</div>' : '')
+        + '<div class="msg">' + esc(it.message) + '</div>'
+        + '<div class="actions"><button class="del" data-id="' + it.id + '">削除</button></div>'
+        + '</div>';
+    }).join('');
+    Array.prototype.forEach.call(list.querySelectorAll('.del'), function (b) {
+      b.addEventListener('click', async function () {
+        if (!confirm('この問い合わせを削除しますか？')) return;
+        await fetch('/api/inquiries/delete', {
+          method: 'POST', headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ password: PW, id: b.getAttribute('data-id') })
+        });
+        load();
+      });
+    });
+  }
+
+  async function enter() {
+    PW = pwInput.value;
+    err.textContent = '';
+    try {
+      await load();
+      gate.style.display = 'none';
+      app.style.display = 'block';
+    } catch (e) {
+      PW = '';
+      err.textContent = e.message || '入れませんでした';
+      pwInput.value = '';
+      pwInput.focus();
+    }
+  }
+
+  document.getElementById('enter').addEventListener('click', enter);
+  pwInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') enter(); });
+  document.getElementById('reload').addEventListener('click', function () { load(); });
+  pwInput.focus();
+})();
+</script>
+</body>
+</html>
